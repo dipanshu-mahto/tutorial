@@ -1,8 +1,13 @@
 const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser')
 const app = express();
 const port = 8002;
  const expressLayouts = require('express-ejs-layouts');
- 
+ const db= require('./config/mongoose');
+
+ app.use(express.urlencoded());
+ app.use(cookieParser());
  app.use(express.static('./assets'));
 
  app.use(expressLayouts);
@@ -16,8 +21,9 @@ app.use('/',require('./routes'));
 
 //setup the view engine
 
+
+app.set('views',path.join(__dirname,'views'));
 app.set('view engine','ejs');
-app.set('views','./views');
 
 app.listen(port,function(err){
     if(err){
